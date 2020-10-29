@@ -1,0 +1,56 @@
+/.metadata/
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+
+### VS Code ###
+.vscode/
+
+
+RestaurantApp/src/main/resources/application.properties
+/bin/
+
+target
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+RestaurantApp/frontend/restaurantapp/node_modules
+
+RestaurantApp/frontend/restaurantappbower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
