@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../css/table.css';
 const Pagination = ({ restsPerPage, totalRests, paginate }) => {
     const pageNumbers = [];
 
@@ -8,7 +8,7 @@ const Pagination = ({ restsPerPage, totalRests, paginate }) => {
     }
 
     return (
-        <table id="simple-board">
+        <table id="pagination">
             <tbody>
                 <tr>
                 {pageNumbers.map(number => (

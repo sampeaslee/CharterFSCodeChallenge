@@ -11,6 +11,7 @@ const StateFilterMenu = ({ stateFilter}) => {
     return (
 
         <select onChange={onChange} >
+            <option value="All States" >All States</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>

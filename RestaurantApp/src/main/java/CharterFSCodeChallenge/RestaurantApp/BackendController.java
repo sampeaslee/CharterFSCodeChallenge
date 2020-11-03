@@ -53,7 +53,11 @@ public class BackendController {
 
     @RequestMapping("/filterByState")
     public ArrayList<Restaurant> sendFilteredByState(@RequestParam(value = "state", defaultValue = "") String state) {
-
+    	
+    	if(state.equals("All States")) {
+    		ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
+    	  	return allData;   	
+    	}
     	
     	ArrayList<Restaurant> dataByState = (ArrayList<Restaurant>) repo.getRestaurantsByState(state);
     	
@@ -66,8 +70,26 @@ public class BackendController {
     @RequestMapping("/filterByGenre")
     public ArrayList<Restaurant> sendFilteredByGenre(@RequestParam(value = "genre", defaultValue = "") String genre) {
 
+     	if(genre.equals("All Genres")) {
+    		ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
+    	  	return allData;   	
+    	}
     	
     	ArrayList<Restaurant> dataByGenre = (ArrayList<Restaurant>) repo.getRestaurantByGenre(genre);
+    	
+    	return dataByGenre;
+    
+    }
+    
+    @RequestMapping("/filterByName")
+    public ArrayList<Restaurant> sendFilteredByName(@RequestParam(value = "name", defaultValue = "") String city) {
+
+     	if(city.equals("")) {
+    		ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
+    	  	return allData;   	
+    	}
+    	
+    	ArrayList<Restaurant> dataByGenre = (ArrayList<Restaurant>) repo.getRestaurantCity(city);
     	
     	return dataByGenre;
     	

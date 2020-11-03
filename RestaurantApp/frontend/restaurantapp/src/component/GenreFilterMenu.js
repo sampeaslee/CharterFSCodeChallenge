@@ -10,6 +10,7 @@ const GenreFilterMenu = ({ genreFilter }) => {
     return (
 
         <select onChange={onChange} >
+            <option value="All Genres" >All Genres</option>
             <option value="American">American</option>
             <option value="Asian">Asian</option>
             <option value="Bakery">Bakery</option>
@@ -43,8 +44,6 @@ const GenreFilterMenu = ({ genreFilter }) => {
             <option value="Traditional">Traditional</option>
             <option value="Vegetarian">Vegetarian</option>
             <option value="Vietnamese">Vietnamese</option>
-
-
         </select>
 
     );

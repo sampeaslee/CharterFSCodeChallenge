@@ -14,8 +14,8 @@ public interface RestaurantRepo extends  JpaRepository<Restaurant, String> {
 	@Query(value = "SELECT * FROM restaurant WHERE state = :userInput",  nativeQuery = true)
     public List<Restaurant> getRestaurantsByState(@Param("userInput") String userInput);
 
-	@Query(value = "SELECT * FROM restaurant WHERE restaurant.state LIKE :userInput%",  nativeQuery = true)
-	public List<Restaurant> getRestaurantByStatesFirstLetter(@Param("userInput") String userInput);
+	@Query(value = "SELECT * FROM restaurant WHERE restaurant.city LIKE :userInput%",  nativeQuery = true)
+	public List<Restaurant> getRestaurantCity(@Param("userInput") String userInput);
 	
 	@Query(value = "SELECT * FROM restaurant WHERE restaurant.genre LIKE CONCAT('%,', :userInput, '%') OR restaurant.genre LIKE :userInput%",  nativeQuery = true)
 	public List<Restaurant> getRestaurantByGenre(@Param("userInput") String userInput);

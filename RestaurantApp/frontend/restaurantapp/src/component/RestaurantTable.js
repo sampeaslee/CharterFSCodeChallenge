@@ -1,4 +1,6 @@
 import React from 'react';
+import  '../css/table.css';
+
 
 const RestaurantTable = ({ restaurantData }) => {
 
@@ -12,11 +14,11 @@ const RestaurantTable = ({ restaurantData }) => {
     } else {
 
         return (
-
-            <table id="simple-board">
-                <tbody>
+           
+            <table id  =  "restTable">
+                <tbody  >
                     <tr>
-                        <th>Name</th>
+                        <th  >Name</th>
                         <th>Genres</th>
                         <th>City</th>
                         <th>State</th>
