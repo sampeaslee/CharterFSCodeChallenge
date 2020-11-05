@@ -52,16 +52,71 @@ public class BackendController {
     }
 
     @RequestMapping("/filterByState")
-    public ArrayList<Restaurant> sendFilteredByState(@RequestParam(value = "state", defaultValue = "") String state) {
+    public ArrayList<Restaurant> sendFilteredByState(@RequestParam(value = "state", defaultValue = "") String state,
+    		@RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "genre", defaultValue = "") String genre ) {
+    	System.out.println("city " + city);
+    	System.out.println("state " + state);
+    	System.out.println("genre " + genre);
     	
-    	if(state.equals("All States")) {
-    		ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
-    	  	return allData;   	
+		
+	   	ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.filterStateCityAndGenre(genre, city,state);
+	   	
+	  	return allData;  
+	 //Filter State	
+    	/*
+    	//ALL DATA
+    	if(state.equals("") && city.equals("") && genre.equals("")) {
+    		
+    	   	ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
+    	   	
+    	  	return allData;  
+    	 //Filter State	
+    	}else if(!state.equals("") && city.equals("") && genre.equals("")) {
+    		
+    		ArrayList<Restaurant> dataByState = (ArrayList<Restaurant>) repo.getRestaurantsByState(state);
+    		
+    	 	return dataByState;
+    	//Filter City
+    	}else if(state.equals("") && !city.equals("") && genre.equals("")) {
+        	
+        	ArrayList<Restaurant> dataByCity= (ArrayList<Restaurant>) repo.getRestaurantCity(city);
+        	
+        	return dataByCity;
+        //Filter Genre	
+    	}else if(state.equals("") && city.equals("") && !genre.equals("")) {
+    		
+        	ArrayList<Restaurant> dataByGenre = (ArrayList<Restaurant>) repo.getRestaurantByGenre(genre);
+        	
+        	return dataByGenre;
+        //Filter City and Genre
+    	}else if(state.equals("") && !city.equals("") && !genre.equals("")) {
+    		System.out.println("SAM");
+        	ArrayList<Restaurant> dataByGenreCity = (ArrayList<Restaurant>) repo.getRestaurantByGenreAndCity(genre,city);
+        	
+        	return dataByGenreCity;
+        //Filter City and State
+    	}else if(!state.equals("") && !city.equals("") && genre.equals("")) {
+    		System.out.println("SAM");
+        	ArrayList<Restaurant> dataByStateCity = (ArrayList<Restaurant>) repo.getRestaurantCityandState(city,state);
+        	
+        	return dataByStateCity;
+        
+    	}else if(!state.equals("") && !city.equals("") && genre.equals("")) {
+    		System.out.println("SAM");
+        	ArrayList<Restaurant> dataByStateCity = (ArrayList<Restaurant>) repo.getRestaurantCityandState(city,state);
+        	
+        	return dataByStateCity;
+        
     	}
     	
-    	ArrayList<Restaurant> dataByState = (ArrayList<Restaurant>) repo.getRestaurantsByState(state);
+    
+    		ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
+    	  	return allData;   	
+   */
     	
-    	return dataByState;
+    
+    	
+   
     	
  	
     }
@@ -81,9 +136,10 @@ public class BackendController {
     
     }
     
-    @RequestMapping("/filterByName")
-    public ArrayList<Restaurant> sendFilteredByName(@RequestParam(value = "name", defaultValue = "") String city) {
-
+    @RequestMapping("/filterByCity")
+    public ArrayList<Restaurant> sendFilteredByCity(@RequestParam(value = "city", defaultValue = "") String city) {
+    	System.out.println("filterByCIty");
+    	System.out.println(city);
      	if(city.equals("")) {
     		ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.findAll();
     	  	return allData;   	

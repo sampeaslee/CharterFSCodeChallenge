@@ -1,15 +1,18 @@
 import React, { useState, useEffect, Dropdown } from 'react';
-
 import './App.css';
 import  './css/style.css'
 import RestaurantTable from "./component/RestaurantTable.js";
-import axios from "axios";
 import Pagination from './component/Pagination.js';
 import StateFilterMenu from './component/StateFilterMenu.js';
-import GenreFilterMenu from './component/GenreFilterMenu.js'
+import GenreFilterMenu from './component/GenreFilterMenu.js';
+import mergeSort from "./sort.js"
+
 
 
 const App = () => {
+
+ 
+
     var dataFromBackend = "";
 
 
@@ -19,7 +22,7 @@ const App = () => {
     const [searchType, setSearchType] = useState("");
     const [fiterByState, setFilterByState] = useState("");
     const [fiterByGenre, setFilterByGenre] = useState("");
-    const [filterByName, setFilterByName] = useState("");
+    const [filterByCity, setFilterByCity] = useState("");
 
 
     //Initial loading of the page (Loads all restaurant data)
@@ -30,16 +33,18 @@ const App = () => {
             let response = await fetch('/sendAllData');;
             dataFromBackend = await response.json();
             setRestData(dataFromBackend);
+            
+            
         }
 
     }, []);
 
-    //Get data sorted by name
+   /* //Get data sorted by name
     async function sortByName() {
         let response = await fetch('/sortByName');
         dataFromBackend = await response.json();
         setRestData(dataFromBackend);
-    }
+    }*/
 
     // Get 10 Retaurants 
     const indexOfLastRest = currentPage * restsPerPage;
@@ -52,66 +57,95 @@ const App = () => {
     // Change page nuumber when clicked 
     const paginate = (pageNumber) =>  setCurrentPage(pageNumber);
     
-    const  setStateFilter = async (state) => {
+    const setStateFilter = async (state) => {
+       
         setFilterByState(state)
-        let response = await fetch('/filterByState?state=' + state);
-        dataFromBackend = await response.json();
-        console.log(dataFromBackend);
-        setRestData(dataFromBackend);
+
+        let response = await fetch('/filterByState?state=' + state
+            + "&city=" + filterByCity + "&genre=" + fiterByGenre);
+       dataFromBackend = await response.json();
+       setRestData(dataFromBackend);
+
+
+
     }
 
     const setGenreFilter = async (genre) => {
         setFilterByGenre(genre)
-        let response = await fetch('/filterByGenre?genre=' + genre);
+        console.log(filterByCity)
+        let response = await fetch('/filterByState?state=' + fiterByState
+            + "&city=" + filterByCity + "&genre=" + genre);
         dataFromBackend = await response.json();
-        console.log(dataFromBackend)
         setRestData(dataFromBackend);
     }
 
-    const setNameFilter = async (name) => {
-        setFilterByName(name);
-        let response = await fetch('/filterByName?name=' + name);
-        dataFromBackend = await response.json();
-        console.log(dataFromBackend)
-        setRestData(dataFromBackend);
-    }
+    const searchByCity = async (event) => {
+        event.preventDefault();
 
+        let response = await fetch('/filterByState?state=' + fiterByState
+            + "&city=" + filterByCity + "&genre=" + fiterByGenre);
+        dataFromBackend = await response.json();
+        setRestData(dataFromBackend); 
+        var a = await mergeSort(dataFromBackend)
+        console.log(a);
+    }
 
     return (
         <div>
-            <h1 id="title"> Restaurant Information</h1>
-            <div className="row" >
-                <div className="column1" >
-                    
-                    <p> Filter By Genre</p>
 
-                    <GenreFilterMenu genreFilter={setGenreFilter} />  
+            <div className="header">
+                
+                <p className="title"> Restaurant Information </p>
 
-                    <p> Filter By State</p>
+                   
+            </div> 
+
+            <div class="row">
+                <div class="column">
+                    <GenreFilterMenu genreFilter={setGenreFilter} />
                     <StateFilterMenu stateFilter={setStateFilter} />
                 </div>
-                <div className="column2" >
-                    <RestaurantTable restaurantData={currentRests} />
+                <div class="column">
+                    <p className="statusmessage"> Restaurant Information </p>
                 </div>
-     
-            { /*  <button onClick={filterByState}>Filter By State</button>
-            / <input onChange={event => filterByState(event.target.value)} />
-            */}
-                <div className="column3" >
-                    <form>
-                    <button onClick={setNameFilter}>Search By City</button>
-                        <input onKeyPress={event => setNameFilter(event.target.value)} />
-                        </form>
+                <div class="column">
+                    <form onSubmit={searchByCity} action="filterByCity" className="cityform" >
 
-                          
+                        <input type="text" name="city" placeholder="Search By City"
+                            onChange={event => setFilterByCity(event.target.value)} className="cityinput" />
+                        <input type="submit" value="Submit" className="citysubmitbutton" />
+                    </form>
                 </div>
-            </div>
+               
+            </div> 
+
+           
+            {/** <div className="row" >
+
+       
+
+                <GenreFilterMenu genreFilter={setGenreFilter} />
+
+         
+                <StateFilterMenu stateFilter={setStateFilter} />
+   
+      
+                <button onClick={sortByName} className="sortbutton">Sort By Name</button>
+            </div>**/}
+
+            <div className="column2" >
+
+
+                <RestaurantTable restaurantData={currentRests} state={fiterByState}
+                    genre={fiterByGenre} city={filterByCity} />
+                </div>
+         
             <Pagination
                 restsPerPage={restsPerPage}
                 totalRests={restData.length}
                 paginate={paginate}
             />
-            <button onClick={sortByName}>Sort By Name</button>
+        
         </div>
     );
 };

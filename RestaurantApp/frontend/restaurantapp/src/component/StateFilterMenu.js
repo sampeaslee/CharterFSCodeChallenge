@@ -1,17 +1,17 @@
 import React from 'react';
-
+import '../css/style.css';
 const StateFilterMenu = ({ stateFilter}) => {
 
     function onChange(event){
         var index = event.nativeEvent.target.selectedIndex;
-        console.log(event.nativeEvent.target[index].text);
-        stateFilter(event.nativeEvent.target[index].text);
+        console.log(event.nativeEvent.target[index].value);
+        stateFilter(event.nativeEvent.target[index].value);
 }
 
     return (
 
-        <select onChange={onChange} >
-            <option value="All States" >All States</option>
+        <select onChange={onChange} className="statemenu">
+            <option value="" >Show All States</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>

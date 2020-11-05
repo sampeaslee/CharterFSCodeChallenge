@@ -1,16 +1,16 @@
 import React from 'react';
-
+import '../css/style.css';
 const GenreFilterMenu = ({ genreFilter }) => {
 
     function onChange(event) {
         var index = event.nativeEvent.target.selectedIndex;
-        console.log(event.nativeEvent.target[index].text);
-        genreFilter(event.nativeEvent.target[index].text);
+        console.log(event.nativeEvent.target[index].value);
+        genreFilter(event.nativeEvent.target[index].value);
     }
     return (
 
-        <select onChange={onChange} >
-            <option value="All Genres" >All Genres</option>
+        <select onChange={onChange} className="genremenu">
+            <option value="" >Show All Genres</option>
             <option value="American">American</option>
             <option value="Asian">Asian</option>
             <option value="Bakery">Bakery</option>

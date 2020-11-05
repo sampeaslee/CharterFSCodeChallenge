@@ -1,30 +1,121 @@
-
-.row {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start
+body {
+    background-color: #e6e6e6;
 }
 
-#title{
+
+.column {
+    float: left;
+    width: 33.33%;
+
+}
+
+/* Clear floats after the columns */
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+    text-align:center;
+    padding-bottom:10px;
+}
+#title {
     text-align: center;
+    font-family: Cambria, Georgia, serif;
+    color: black;
 }
 
-.column1 {
-    float: left;
-    width: 15%;
-    padding: 10px;
+
+
+.genremenu {
+    font-family: Cambria, Georgia, serif;
+    padding: 5px 35px 5px 5px;
+    font-size: 16px;
+    border: 1px solid #ADD8E6;
+    height: 34px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url(food.png) 96% / 15% no-repeat #5F9EA0;
+    border-radius: 6px;
+    text-align: left !important;
+}
+
+.statemenu {
+    font-family: Cambria, Georgia, serif;
+    padding: 5px 35px 5px 5px;
+    font-size: 16px;
+    border: 1px solid #ADD8E6;
+    height: 34px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url(states.png) 96% / 15% no-repeat #5F9EA0;
+    border-radius: 6px;
+    text-align: left !important;
+}
+
+.cityform {
+    text-align: right !important;
+    
+}
+
+
+
+input {
+    margin-bottom: 7px;
+}
+
+
+.cityinput {
+    font-family: Cambria, Georgia, serif;
+    border: 1px solid #CCC;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 6px;
+    padding-bottom: 5px;
+}
+
+.citysubmitbutton {
+    font-family: Cambria, Georgia, serif;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    background-color: #5F9EA0
+}
+
+.sortbutton {
+    font-family: Cambria, Georgia, serif;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    background: #ADD8E6;
+}
+
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333333;
+    overflow: hidden;
+}
+
+
+
+
+.header {
+    color: white;
+    background: #333333;
+    padding: 5px 5px 5px 5px;
+}
+
+.title {
+    font-family: Cambria, Georgia, serif;
+    text-align: center !important;
+    font-size: 25px;
+}
+
+.search {
+
+  text-align: right;
 
 }
 
-.column2 {
-    float: left;
-    width: 70%;
-    padding: 10px;
-}
-
-.column3 {
-    float: left;
-    width: 15%;
-    padding: 10px;
+.statusmessage {
+    font-family: Cambria, Georgia, serif;
+    text-align: center !important;
 }
 

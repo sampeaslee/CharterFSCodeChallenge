@@ -13,9 +13,9 @@ const Pagination = ({ restsPerPage, totalRests, paginate }) => {
                 <tr>
                 {pageNumbers.map(number => (
                     <td>
-                        <a onClick={() => paginate(number)} href='#' className='page-link'>
+                        <button onClick={() => paginate(number)} className='paginationbutton'>
                             {number}
-                        </a>
+                        </button>
                     </td>
                    
                 ))}
