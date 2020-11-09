@@ -1,10 +1,16 @@
 import React from 'react';
 import '../css/style.css';
+
+/**
+ * State drop down menu 
+ * @param {function} stateFilter - function that sets the apps state state
+ */
 const StateFilterMenu = ({ stateFilter}) => {
 
-    function onChange(event){
+    function onChange(event) {
+
         var index = event.nativeEvent.target.selectedIndex;
-        console.log(event.nativeEvent.target[index].value);
+
         stateFilter(event.nativeEvent.target[index].value);
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dropdown } from 'react';
+import React, { useState, useEffect  } from 'react';
 import './App.css';
 import  './css/style.css'
 import RestaurantTable from "./component/RestaurantTable.js";
@@ -11,141 +11,155 @@ import mergeSort from "./sort.js"
 
 const App = () => {
 
- 
-
     var dataFromBackend = "";
 
-
+    //Intialize states of the application 
     const [restData, setRestData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [restsPerPage] = useState(10);
-    const [searchType, setSearchType] = useState("");
-    const [fiterByState, setFilterByState] = useState("");
-    const [fiterByGenre, setFilterByGenre] = useState("");
+    const [filterByState, setFilterByState] = useState("");
+    const [filterByGenre, setFilterByGenre] = useState("");
     const [filterByCity, setFilterByCity] = useState("");
+    const [filterStatus, setFilterStatus] = useState("Filters On")
+    const [checkBox, setCheckBox] = useState("checked")
 
+    //Retrieves all restaurant data from the database
+    const getAllData = async () => {
+        let response = await fetch('/sendAllData');;
+        dataFromBackend = await response.json();
+        setRestData(dataFromBackend);
+    }
 
     //Initial loading of the page (Loads all restaurant data)
     useEffect(async () => {
-
-        if (searchType == "") {
-
-            let response = await fetch('/sendAllData');;
-            dataFromBackend = await response.json();
-            setRestData(dataFromBackend);
-            
-            
-        }
-
+        getAllData();
     }, []);
 
-   /* //Get data sorted by name
-    async function sortByName() {
-        let response = await fetch('/sortByName');
-        dataFromBackend = await response.json();
-        setRestData(dataFromBackend);
-    }*/
-
-    // Get 10 Retaurants 
+    // Get 10 Retaurants from array containing restaurant data
     const indexOfLastRest = currentPage * restsPerPage;
-
     const indexOfFirstRest = indexOfLastRest - restsPerPage;
-
     const currentRests = restData.slice(indexOfFirstRest, indexOfLastRest);
 
 
     // Change page nuumber when clicked 
     const paginate = (pageNumber) =>  setCurrentPage(pageNumber);
-    
+
+    // Make call to backend to get restaurant data filtered by state
     const setStateFilter = async (state) => {
-       
+
         setFilterByState(state)
 
-        let response = await fetch('/filterByState?state=' + state
-            + "&city=" + filterByCity + "&genre=" + fiterByGenre);
-       dataFromBackend = await response.json();
-       setRestData(dataFromBackend);
+        if (checkBox == "checked") {
+  
+            let response = await fetch('/filterData?state=' + state
+                + "&city=" + filterByCity + "&genre=" + filterByGenre);
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
 
+        } else {
 
+            let response = await fetch('/filterData?state='
+                + "&city=" + filterByCity + "&genre=");
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
 
+        }
     }
 
+    //Make call to backend to get restaurant data filtered by genre 
     const setGenreFilter = async (genre) => {
         setFilterByGenre(genre)
-        console.log(filterByCity)
-        let response = await fetch('/filterByState?state=' + fiterByState
-            + "&city=" + filterByCity + "&genre=" + genre);
-        dataFromBackend = await response.json();
-        setRestData(dataFromBackend);
+        if (checkBox == "checked") {
+            let response = await fetch('/filterData?state=' + filterByState
+                + "&city=" + filterByCity + "&genre=" + genre);
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
+        } else {
+            let response = await fetch('/filterData?state='
+                + "&city=" + filterByCity + "&genre=");
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
+        }
+      
     }
-
+    //Make call to backend to get restaurant data filtered by city
     const searchByCity = async (event) => {
         event.preventDefault();
+        if (checkBox == "checked") {
+            let response = await fetch('/filterData?state=' + filterByState
+                + "&city=" + filterByCity + "&genre=" + filterByGenre);
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
+        } else {
+            let response = await fetch('/filterData?state='
+                + "&city=" + filterByCity + "&genre=");
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
+        }      
 
-        let response = await fetch('/filterByState?state=' + fiterByState
-            + "&city=" + filterByCity + "&genre=" + fiterByGenre);
-        dataFromBackend = await response.json();
-        setRestData(dataFromBackend); 
-        var a = await mergeSort(dataFromBackend)
-        console.log(a);
+    }
+
+    //Sorts the current restaurant data
+    const sortByName = () => {
+        var sortedData = mergeSort(restData)
+        setRestData(sortedData); 
+    }
+
+    //Turns on and off filters 
+    const checkAddress = async () => {
+        if (checkBox == "checked") {
+            setCheckBox("uncheck")
+            setFilterStatus("Filters Off")
+            if (filterByState != "" || filterByGenre != "") {
+                let response = await fetch('/filterData?state='
+                    + "&city=" + filterByCity + "&genre=");
+                dataFromBackend = await response.json();
+                setRestData(dataFromBackend);
+            }         
+        } else {
+            setCheckBox("checked")
+            setFilterStatus("Filters On")
+            let response = await fetch('/filterData?state=' + filterByState
+                + "&city=" + filterByCity + "&genre=" + filterByGenre);
+            dataFromBackend = await response.json();
+            setRestData(dataFromBackend);
+        }
     }
 
     return (
         <div>
-
-            <div className="header">
-                
-                <p className="title"> Restaurant Information </p>
-
-                   
+            <div className="header">          
+                <p className="title"> Restaurant Information </p>            
             </div> 
-
             <div class="row">
                 <div class="column">
                     <GenreFilterMenu genreFilter={setGenreFilter} />
                     <StateFilterMenu stateFilter={setStateFilter} />
+                    <button onClick={sortByName} className="sortbutton">Sort By Name</button>                 
                 </div>
                 <div class="column">
-                    <p className="statusmessage"> Restaurant Information </p>
+                    <form>
+                        <input type="checkbox" onChange={checkAddress} defaultChecked={checkBox} />
+                        <label>{filterStatus}</label>
+                    </form>
                 </div>
                 <div class="column">
                     <form onSubmit={searchByCity} action="filterByCity" className="cityform" >
-
                         <input type="text" name="city" placeholder="Search By City"
                             onChange={event => setFilterByCity(event.target.value)} className="cityinput" />
                         <input type="submit" value="Submit" className="citysubmitbutton" />
                     </form>
-                </div>
-               
+                </div>             
             </div> 
-
-           
-            {/** <div className="row" >
-
-       
-
-                <GenreFilterMenu genreFilter={setGenreFilter} />
-
-         
-                <StateFilterMenu stateFilter={setStateFilter} />
-   
-      
-                <button onClick={sortByName} className="sortbutton">Sort By Name</button>
-            </div>**/}
-
-            <div className="column2" >
-
-
-                <RestaurantTable restaurantData={currentRests} state={fiterByState}
-                    genre={fiterByGenre} city={filterByCity} />
+            <div  >
+               <RestaurantTable restaurantData={currentRests} state={filterByState}
+                    genre={filterByGenre} city={filterByCity} />
                 </div>
-         
             <Pagination
                 restsPerPage={restsPerPage}
                 totalRests={restData.length}
                 paginate={paginate}
             />
-        
         </div>
     );
 };

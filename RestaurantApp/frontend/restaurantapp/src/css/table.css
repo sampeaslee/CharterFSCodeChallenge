@@ -63,7 +63,7 @@ table tr:first-child th:last-child {
 #pagination {
     margin-left: auto;
     margin-right: auto;
-    padding: 20px 20px 20px 20px;
+    padding: 20px 20px 10px 20px;
 }
 
 .searchstatus{
@@ -73,5 +73,6 @@ table tr:first-child th:last-child {
 .paginationbutton {
     border-radius: 3px;
     background-color: #5F9EA0;
+   
 
 }

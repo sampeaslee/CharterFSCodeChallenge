@@ -1,10 +1,16 @@
 import React from 'react';
 import '../css/style.css';
+
+/**
+ * State drop down menu
+ * @param {any} genreFilter - function that sets the apps genre state
+ */
 const GenreFilterMenu = ({ genreFilter }) => {
 
     function onChange(event) {
+
         var index = event.nativeEvent.target.selectedIndex;
-        console.log(event.nativeEvent.target[index].value);
+
         genreFilter(event.nativeEvent.target[index].value);
     }
     return (

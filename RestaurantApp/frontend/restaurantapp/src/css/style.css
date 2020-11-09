@@ -9,7 +9,6 @@ body {
 
 }
 
-/* Clear floats after the columns */
 .row::after {
     content: "";
     display: table;
@@ -83,17 +82,8 @@ input {
     font-family: Cambria, Georgia, serif;
     border: 1px solid #CCC;
     border-radius: 6px;
-    background: #ADD8E6;
+    background: #5F9EA0;
 }
-
-
-/* Add a black background color to the top navigation */
-.topnav {
-    background-color: #333333;
-    overflow: hidden;
-}
-
-
 
 
 .header {
