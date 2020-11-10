@@ -10,21 +10,32 @@ import  '../css/table.css';
  */
 
 const RestaurantTable = ({ restaurantData, genre, state, city }) => {
+
+    //Data still loading from backend 
+    if (restaurantData === "Loading") {
+        return (
+            <div className="searchstatus">
+                <p>Loading....</p>
+            </div>
+        );
+    }
+
     //Set message to display if users search/filters do no have any matches
-    if (state == "") {
+    if (state === "") {
     } else {
         state = "State: " + state;
     }
 
-    if (city == "") {
+    if (city === "") {
     } else {
         city = "City: " + city;
     }
 
-    if (genre == "") {
+    if (genre === "") {
     } else {
         genre = "Genre: " + genre;
     }
+    
 
     if (restaurantData.length == 0) {
         return (

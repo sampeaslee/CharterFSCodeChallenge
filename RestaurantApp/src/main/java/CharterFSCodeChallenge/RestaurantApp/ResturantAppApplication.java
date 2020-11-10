@@ -14,12 +14,16 @@ import org.springframework.context.annotation.Bean;
 ////////////////////////////////////////////////////////////////////////////////
 @SpringBootApplication
 public class ResturantAppApplication {
-
+	/**
+	 * Starts spring boot application 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ResturantAppApplication.class, args);
 	}
 	
   /*@Bean
+   * Loaded data from JSON file into MySQL Database 
   public String CommandLineRunner(RestaurantRepo repo) throws Exception{
       //Reading in the JSON File 
       Object obj = new JSONParser().parse(new FileReader

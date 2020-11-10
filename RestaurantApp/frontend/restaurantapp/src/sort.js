@@ -26,8 +26,7 @@ function mergeSort(restaurantData) {
     }
 
     //Merge the two  arrays
-
-    return merge(
+    return mergeSortHelper(
         mergeSort(left), mergeSort(right)
     );
 };
@@ -37,12 +36,7 @@ function mergeSort(restaurantData) {
  * @param {Array} left
  * @param {Array} right
  */
-function merge(left, right) {
-    console.log("########################################")
-    console.log("right")
-    console.log(right)
-    console.log("left")
-    console.log(left)
+function mergeSortHelper(left, right) {
     //Variabes to keep track postion in arrays
     var i = 0;
     var j = 0;
@@ -73,10 +67,6 @@ function merge(left, right) {
         arr.push(right[j])
         j++;
     }
-    console.log("merged")
-    console.log(arr)
-    console.log("########################################")
-
     return(arr)
 } 
 

@@ -19,9 +19,10 @@ public class BackendController {
 	
 	 @Autowired
 	 RestaurantRepo repo;
+	 
 	/**
 	 * Executes SQL query that extracts all the data from the database 
-	 * @return
+	 * @return - ArrayList of Restaurant objects
 	 */
     @RequestMapping("sendAllData")
     public ArrayList<Restaurant> sendAllRestaurantData() {
@@ -36,12 +37,12 @@ public class BackendController {
      * @param state
      * @param city
      * @param genre
-     * @return
+     * @return ArrayList of Restaurant objects
      */
     @RequestMapping("/filterData")
     public ArrayList<Restaurant> sendFilteredByState(@RequestParam(value = "state", defaultValue = "") String state,
     		@RequestParam(value = "city", defaultValue = "") String city, @RequestParam(value = "genre", defaultValue = "") String genre ) {
-		
+	
     	ArrayList<Restaurant> allData = (ArrayList<Restaurant>) repo.filterStateCityAndGenre(genre, city,state);	   	
 	  	
     	return allData;  

@@ -14,6 +14,7 @@ const App = () => {
     var dataFromBackend = "";
 
     //Intialize states of the application 
+    const [isLoading, setLoading] = useState([true])
     const [restData, setRestData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [restsPerPage] = useState(10);
@@ -31,8 +32,10 @@ const App = () => {
     }
 
     //Initial loading of the page (Loads all restaurant data)
-    useEffect(async () => {
+    useEffect(() => {
+        setRestData("Loading");
         getAllData();
+        setLoading(false)
     }, []);
 
     // Get 10 Retaurants from array containing restaurant data
@@ -40,24 +43,16 @@ const App = () => {
     const indexOfFirstRest = indexOfLastRest - restsPerPage;
     const currentRests = restData.slice(indexOfFirstRest, indexOfLastRest);
 
-
-    // Change page nuumber when clicked 
-    const paginate = (pageNumber) =>  setCurrentPage(pageNumber);
-
     // Make call to backend to get restaurant data filtered by state
     const setStateFilter = async (state) => {
-
         setFilterByState(state)
-
-        if (checkBox == "checked") {
-  
+        if (checkBox === "checked") {
+            console.log(filterByCity)
             let response = await fetch('/filterData?state=' + state
                 + "&city=" + filterByCity + "&genre=" + filterByGenre);
             dataFromBackend = await response.json();
             setRestData(dataFromBackend);
-
         } else {
-
             let response = await fetch('/filterData?state='
                 + "&city=" + filterByCity + "&genre=");
             dataFromBackend = await response.json();
@@ -69,7 +64,7 @@ const App = () => {
     //Make call to backend to get restaurant data filtered by genre 
     const setGenreFilter = async (genre) => {
         setFilterByGenre(genre)
-        if (checkBox == "checked") {
+        if (checkBox === "checked") {
             let response = await fetch('/filterData?state=' + filterByState
                 + "&city=" + filterByCity + "&genre=" + genre);
             dataFromBackend = await response.json();
@@ -85,7 +80,7 @@ const App = () => {
     //Make call to backend to get restaurant data filtered by city
     const searchByCity = async (event) => {
         event.preventDefault();
-        if (checkBox == "checked") {
+        if (checkBox === "checked") {
             let response = await fetch('/filterData?state=' + filterByState
                 + "&city=" + filterByCity + "&genre=" + filterByGenre);
             dataFromBackend = await response.json();
@@ -96,7 +91,6 @@ const App = () => {
             dataFromBackend = await response.json();
             setRestData(dataFromBackend);
         }      
-
     }
 
     //Sorts the current restaurant data
@@ -107,10 +101,10 @@ const App = () => {
 
     //Turns on and off filters 
     const checkAddress = async () => {
-        if (checkBox == "checked") {
+        if (checkBox === "checked") {
             setCheckBox("uncheck")
             setFilterStatus("Filters Off")
-            if (filterByState != "" || filterByGenre != "") {
+            if (filterByState !== "" || filterByGenre !== "") {
                 let response = await fetch('/filterData?state='
                     + "&city=" + filterByCity + "&genre=");
                 dataFromBackend = await response.json();
@@ -158,7 +152,7 @@ const App = () => {
             <Pagination
                 restsPerPage={restsPerPage}
                 totalRests={restData.length}
-                paginate={paginate}
+                paginate={setCurrentPage}
             />
         </div>
     );
