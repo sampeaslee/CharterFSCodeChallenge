@@ -33,6 +33,7 @@ const App = () => {
 
     //Initial loading of the page (Loads all restaurant data)
     useEffect(() => {
+        document.title = "CharterFSCodeChallenge";
         setRestData("Loading");
         getAllData();
         setLoading(false)
